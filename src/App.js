@@ -3,15 +3,15 @@ import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
 import interceptors from "./Interceptors";
 import login from "./login";
-import dashboard from "./Dashboard";
+import home from "./Home";
 
 function App() {
   return (
       <div className="App">
         <header className="App-header">
           <BrowserRouter>
-            <Route exact path="/" component={login} />
-            <Route exact path="/dashboard" component={dashboard} />
+            <Route exact path="/login" component={login} />
+            <Route exact path="/" component={home} />
           </BrowserRouter>
         </header>
       </div>

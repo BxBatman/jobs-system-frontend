@@ -17,9 +17,6 @@
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -36,3 +33,20 @@
     transform: rotate(360deg);
   }
 }
+.navigation-dropdown a{
+  background-color: #343a40;
+  color: rgba(255,255,255,.5);
+
+}
+
+.navigation-dropdown .dropdown-menu.show {
+  background-color:  #343a40;
+}
+
+.mb-3 {
+  padding-top: 50px;
+}
+
+
+
+
