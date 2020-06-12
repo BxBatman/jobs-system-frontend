@@ -36,7 +36,7 @@
 .navigation-dropdown a{
   background-color: #343a40;
   color: rgba(255,255,255,.5);
-
+  font-size: 20px;
 }
 
 .navigation-dropdown .dropdown-menu.show {
@@ -46,6 +46,12 @@
 .mb-3 {
   padding-top: 50px;
 }
+
+.create-offer-form {
+    padding-top: 50px;
+  padding-bottom: 50px;
+}
+
 
 
 
