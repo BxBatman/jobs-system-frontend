@@ -49,7 +49,6 @@ class Navigation extends Component {
         this.setState({
             switchLogin: true
         })
-
         localStorage.clear();
     }
 
