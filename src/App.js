@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import interceptors from "./Interceptors";
 import home from "./Home";
 import createOffer from "./CreateOffer"
+import myOffers from "./MyOffers"
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <BrowserRouter>
             <Route exact path="/createOffer" component={createOffer}/>
             <Route exact path="/" component={home} />
+            <Route exact path="/myOffers" component={myOffers}/>
           </BrowserRouter>
         </header>
       </div>

@@ -52,6 +52,11 @@
   padding-bottom: 50px;
 }
 
+.list-group-item {
+  cursor: pointer;
+  margin-top: 20px;
+}
+
 
 
 

@@ -50,6 +50,7 @@ class Navigation extends Component {
             switchLogin: true
         })
         localStorage.clear();
+        window.location.reload();
     }
 
     handleChange = event => {
@@ -104,6 +105,7 @@ class Navigation extends Component {
                 switchLogin: false
             })
             this.handleCloseLogin();
+            window.location.reload();
     })}
 
 
@@ -115,6 +117,7 @@ class Navigation extends Component {
                 </Navbar.Brand>
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Jobs</Nav.Link>
+                    <Nav.Link href="/myOffers">My Offers</Nav.Link>
                     {this.state.switchLogin ? null : <Nav.Link href="/createOffer">Create offer</Nav.Link>}
                 </Nav>
                 {this.state.switchLogin ? <NavDropdown className="navigation-dropdown" id="nav-dropdown" title="Log in">
