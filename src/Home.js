@@ -99,7 +99,7 @@ class Home extends Component {
                        {this.state.jobs.map((job, i) => <ListGroupItem variant="dark" key={i}
                                                                        onClick={() => this.onShowDetails(job)}>
                           <Col>
-                             Oferta #{i}: {job.title}
+                             Oferta #{job.id}: {job.title}
                           </Col>
                            <Col>
                               Zarobki: {job.salary}zł

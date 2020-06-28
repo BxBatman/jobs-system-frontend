@@ -26,6 +26,7 @@ class MyOffers extends Component {
 
         this.onShowDetails = this.onShowDetails.bind(this);
         this.handleCloseDetails = this.handleCloseDetails.bind(this);
+        this.onDelete = this.onDelete.bind(this);
     }
 
 
@@ -55,6 +56,12 @@ class MyOffers extends Component {
         }).catch(error => console.log(error))
     };
 
+    onDelete = (i) => {
+        axios.delete("http://localhost:8080/jobs/" + i.id, {
+        }).then(response => {
+            window.location.reload();
+        }).catch(error => console.log(error))
+    }
 
     componentDidMount() {
         axios.post("http://localhost:8080/jobs/userOffers", {
@@ -88,14 +95,18 @@ class MyOffers extends Component {
                 <Row>
                     <Col md={{ span: 6, offset: 3 }}>
                             <ListGroup>
-                                {this.state.jobs.map((job, i) => <ListGroupItem variant="dark" key={i}
-                                                                                onClick={() => this.onShowDetails(job)}>
+                                {this.state.jobs.map((job, i) =>
+                                    <ListGroupItem variant="dark" key={i}>
                                     <Col>
-                                        Oferta #{i}: {job.title}
+                                        Oferta #{job.id}: {job.title}
                                     </Col>
                                     <Col>
                                         Zarobki: {job.salary}zł
                                     </Col>
+                                        <Button className="pull-right" bsSize="small" onClick={() => this.onShowDetails(job)}
+                                                bsStyle="primary">Details</Button>
+                                    <Button className="pull-right" bsSize="small" onClick={() => this.onDelete(job)}
+                                            bsStyle="danger" style={{backgroundColor: 'red'}}>Delete</Button>
                                 </ListGroupItem>)}
                             </ListGroup>
                     </Col>

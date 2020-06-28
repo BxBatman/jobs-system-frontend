@@ -53,6 +53,7 @@ class CreateOffer extends Component {
             salary: this.state.salary,
             username: this.state.username
         }).then(response => {
+            this.props.history.push("/");
         }).catch(error => {
             console.log(error);
         })
