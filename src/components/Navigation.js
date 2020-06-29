@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Navbar, Nav, Form, FormControl, Button, NavDropdown, Modal} from "react-bootstrap";
 import axios from "axios";
 import Image from "react-bootstrap/Image";
+import logo from'./output-onlinepngtools.png'
 class Navigation extends Component {
 
     constructor(props, context) {
@@ -112,12 +113,10 @@ class Navigation extends Component {
     render() {
         return (
             <Navbar fixed="top" expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand>
-                   Logo
-                </Navbar.Brand>
+                <Image src={logo} style={{color: 'white'}} fluid />
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Jobs</Nav.Link>
-                    <Nav.Link href="/myOffers">My Offers</Nav.Link>
+                    {this.state.switchLogin ? null : <Nav.Link href="/myOffers">My Offers</Nav.Link>}
                     {this.state.switchLogin ? null : <Nav.Link href="/createOffer">Create offer</Nav.Link>}
                 </Nav>
                 {this.state.switchLogin ? <NavDropdown className="navigation-dropdown" id="nav-dropdown" title="Log in">

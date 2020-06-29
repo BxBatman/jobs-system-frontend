@@ -4,6 +4,7 @@ import Navigation from "./components/Navigation"
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 import axios from "axios";
+import Jumbotron from "react-bootstrap/Jumbotron";
 
 
 class Home extends Component {
@@ -21,8 +22,8 @@ class Home extends Component {
             workHours: '',
             salary: '',
             firstName: '',
-            lastName: ''
-
+            lastName: '',
+            isLogged: localStorage.getItem("Username") !== ''
         }
         this.onShowDetails = this.onShowDetails.bind(this);
         this.handleCloseDetails = this.handleCloseDetails.bind(this);
@@ -74,14 +75,29 @@ class Home extends Component {
     };
 
     render() {
+
+
         return (
            <Container fluid>
                <Row>
                    <Col><Navigation/></Col>
                </Row>
                <Row>
+                   <Col  md={{ span: 8, offset: 2 }}>
+                       <Jumbotron style={{marginTop: '60px', color:'#1b1e21', backgroundColor: '#c6c8ca'}} >
+                           <h1>Welcome to job site!</h1>
+                           <p style={{textAlign: 'center'}}>
+                               You can browse to find your dream job or post your job offer.
+                           </p>
+                           {this.state.isLogged ? null : <p style={{textAlign: 'center'}}>
+                               Just register ! It's simple and free !
+                           </p> }
+                       </Jumbotron>
+                   </Col>
+               </Row>
+               <Row>
                    <Col md={{ span: 6, offset: 3 }}>
-                       <InputGroup className="mb-3">
+                       {this.state.isLogged ? null : <InputGroup className="mb-3">
                            <FormControl
                                placeholder="Recipient's username"
                                aria-label="Recipient's username"
@@ -91,19 +107,21 @@ class Home extends Component {
                                <Button variant="outline-secondary">Button</Button>
                            </InputGroup.Append>
                        </InputGroup>
+                       }
                    </Col>
                </Row>
+
                <Row>
                   <Col md={{ span: 8, offset: 2 }}>
                    <ListGroup>
                        {this.state.jobs.map((job, i) => <ListGroupItem variant="dark" key={i}
+
                                                                        onClick={() => this.onShowDetails(job)}>
-                          <Col>
-                             Oferta #{job.id}: {job.title}
-                          </Col>
-                           <Col>
-                              Zarobki: {job.salary}zł
-                           </Col>
+                         <Row>
+                          <Col style={{textAlign: "left"}}>Oferta #{job.id}: {job.title}</Col>
+                             <Col md="auto">$$$</Col>
+                           <Col xs lg="2">{job.salary}zł</Col>
+                         </Row>
                        </ListGroupItem>)}
                            </ListGroup>
                   </Col>

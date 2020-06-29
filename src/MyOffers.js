@@ -92,21 +92,22 @@ class MyOffers extends Component {
                 <Row>
                     <Col><Navigation/></Col>
                 </Row>
-                <Row>
+                <Row style={{marginTop: '40px'}}>
                     <Col md={{ span: 6, offset: 3 }}>
                             <ListGroup>
                                 {this.state.jobs.map((job, i) =>
                                     <ListGroupItem variant="dark" key={i}>
-                                    <Col>
-                                        Oferta #{job.id}: {job.title}
-                                    </Col>
-                                    <Col>
-                                        Zarobki: {job.salary}zł
-                                    </Col>
-                                        <Button className="pull-right" bsSize="small" onClick={() => this.onShowDetails(job)}
-                                                bsStyle="primary">Details</Button>
-                                    <Button className="pull-right" bsSize="small" onClick={() => this.onDelete(job)}
-                                            bsStyle="danger" style={{backgroundColor: 'red'}}>Delete</Button>
+
+                                        <Row>
+                                            <Col style={{textAlign: "left"}}>Oferta #{job.id}: {job.title}</Col>
+                                            <Col md="auto">$$$ {job.salary}zł</Col>
+                                            <Col xs lg="3">
+                                                <Button className="pull-right" bsSize="small" onClick={() => this.onShowDetails(job)}
+                                                        bsStyle="primary">Details</Button>
+                                                <Button className="pull-right"bsSize="small" onClick={() => this.onDelete(job)}
+                                                        bsStyle="danger" style={{backgroundColor: 'red', marginLeft: '10px'}}>Delete</Button>
+                                            </Col>
+                                        </Row>
                                 </ListGroupItem>)}
                             </ListGroup>
                     </Col>
