@@ -5,6 +5,7 @@ import interceptors from "./Interceptors";
 import home from "./Home";
 import createOffer from "./CreateOffer"
 import myOffers from "./MyOffers"
+import 'react-notifications/lib/notifications.css';
 
 function App() {
   return (

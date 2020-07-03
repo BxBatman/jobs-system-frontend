@@ -4,6 +4,8 @@ import {Container, Row, Col, FormControl,InputGroup, Button, Form} from "react-b
 import Navigation from "./components/Navigation"
 import TagsInput from 'react-tagsinput'
 import axios from "axios";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+
 
 class CreateOffer extends Component {
     constructor(props) {
@@ -54,6 +56,7 @@ class CreateOffer extends Component {
             username: this.state.username
         }).then(response => {
             this.props.history.push("/");
+            NotificationManager.success("Job offer created !")
         }).catch(error => {
             console.log(error);
         })

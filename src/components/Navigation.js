@@ -1,8 +1,9 @@
 import React, {Component} from "react";
-import {Navbar, Nav, Form, FormControl, Button, NavDropdown, Modal} from "react-bootstrap";
+import {Navbar, Nav, Form, FormControl, Button, NavDropdown, Modal, Col, Row} from "react-bootstrap";
 import axios from "axios";
 import Image from "react-bootstrap/Image";
-import logo from'./output-onlinepngtools.png'
+import logo from'./output-onlinepngtools.png';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 class Navigation extends Component {
 
     constructor(props, context) {
@@ -52,6 +53,7 @@ class Navigation extends Component {
         })
         localStorage.clear();
         window.location.reload();
+        this.props.history.push("/");
     }
 
     handleChange = event => {
@@ -85,7 +87,7 @@ class Navigation extends Component {
         }).then(response => {
             this.handleCloseRegister();
         }).catch(error => {
-            console.log(error);
+            NotificationManager.error("Error while creating user");
         })
 
     }
@@ -107,7 +109,9 @@ class Navigation extends Component {
             })
             this.handleCloseLogin();
             window.location.reload();
-    })}
+    }).catch(error => {
+            NotificationManager.error("Invalid username or password");
+        })}
 
 
     render() {
@@ -131,7 +135,6 @@ class Navigation extends Component {
 
                 <Modal show={this.state.showLogin} onHide={this.handleCloseLogin}>
                     <Modal.Header closeButton>
-                        Log in
                     </Modal.Header>
                         <Modal.Body>
                             <Form onSubmit={this.onLoginSubmit}>
@@ -144,9 +147,11 @@ class Navigation extends Component {
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control id="loginPassword" type="password" placeholder="Password" onChange={this.handleChange} />
                                 </Form.Group>
-                                <Button variant="primary" type="submit">
-                                    Submit
-                                </Button>
+                                <Col md={{ span: 2, offset: 2 }}>
+                                    <Button style={{width: '300px', marginTop: '40px'}} variant="primary" type="submit">
+                                        Log in
+                                    </Button>
+                                </Col>
                             </Form>
                         </Modal.Body>
                 </Modal>
@@ -154,11 +159,9 @@ class Navigation extends Component {
 
                 <Modal show={this.state.showRegister} onHide={this.handleCloseRegister}>
                     <Modal.Header closeButton>
-                        Register
                     </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={this.onUserCreateSubmit}>
-
                             <Form.Group >
                                 <Form.Label>First name</Form.Label>
                                 <Form.Control type="text" name="firstName" id="firstName" placeholder="Enter first name" onChange={this.handleChange} />
@@ -188,12 +191,15 @@ class Navigation extends Component {
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password" onChange={this.handleChange} />
                             </Form.Group>
-                            <Button variant="primary" type="submit">
+                            <Col md={{ span: 2, offset: 2 }}>
+                            <Button style={{width: '300px', marginTop: '40px'}} variant="primary" type="submit">
                                 Register
                             </Button>
+                            </Col>
                         </Form>
                     </Modal.Body>
                 </Modal>
+                <NotificationContainer/>
             </Navbar>
 
 

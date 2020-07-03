@@ -5,6 +5,9 @@ import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 import axios from "axios";
 import Jumbotron from "react-bootstrap/Jumbotron";
+import salary from "./components/salary.png"
+import no from "./components/no.png"
+import Image from "react-bootstrap/Image";
 
 
 class Home extends Component {
@@ -14,6 +17,7 @@ class Home extends Component {
         this.state = {
             jobs: [],
             showDetails: false,
+            showMustLogIn: false,
             title: '',
             description: '',
             requirements: [],
@@ -27,10 +31,15 @@ class Home extends Component {
         }
         this.onShowDetails = this.onShowDetails.bind(this);
         this.handleCloseDetails = this.handleCloseDetails.bind(this);
+        this.handleCloseMustLogIn = this.handleCloseMustLogIn.bind(this);
     }
 
     handleCloseDetails() {
         this.setState({ showDetails: false });
+    }
+
+    handleCloseMustLogIn() {
+        this.setState({ showMustLogIn: false });
     }
 
     componentDidMount() {
@@ -71,7 +80,11 @@ class Home extends Component {
                 showDetails: true
             })
 
-        }).catch(error => console.log(error))
+        }).catch(error => {
+            this.setState({
+                showMustLogIn: true
+            })
+        })
     };
 
     render() {
@@ -118,9 +131,9 @@ class Home extends Component {
 
                                                                        onClick={() => this.onShowDetails(job)}>
                          <Row>
-                          <Col style={{textAlign: "left"}}>Oferta #{job.id}: {job.title}</Col>
-                             <Col md="auto">$$$</Col>
-                           <Col xs lg="2">{job.salary}zł</Col>
+                          <Col style={{textAlign: "left"}}><Image src={no} style={{color: 'white'}} fluid />  {job.id}: {job.title}</Col>
+                             <Col md="auto"><Image src={salary} style={{color: 'white'}} fluid /></Col>
+                           <Col xs lg="2">{job.salary} zł</Col>
                          </Row>
                        </ListGroupItem>)}
                            </ListGroup>
@@ -128,14 +141,56 @@ class Home extends Component {
                </Row>
 
 
-               <Modal show={this.state.showDetails} onHide={this.handleCloseDetails}>
+               <Modal size="lg" style={{fontSize: '20px',minHeight: '200px'}} show={this.state.showDetails} onHide={this.handleCloseDetails}>
                    <Modal.Header closeButton>
                        {this.state.title}
                    </Modal.Header>
                    <Modal.Body>
-                       {this.state.description}
-                       {this.state.salary}
+                       Author:
+                       <Row style={{marginBottom: '20px'}}><Col>{this.state.firstName} {this.state.lastName}</Col>
+                       </Row>
+                       Description:
+                       <Row style={{marginBottom: '20px', textAlign: 'justify'}}>
+                           <Col>{this.state.description}</Col>
+                       </Row>
+
+                       Work Type:
+                       <Row style={{marginBottom: '20px', textAlign: 'justify'}}>
+                           <Col>{this.state.workType}</Col>
+                       </Row>
+
+                        Work Hours:
+                       <Row style={{marginBottom: '20px', textAlign: 'justify'}}>
+                           <Col>{this.state.workHours}</Col>
+                       </Row>
+
+                       Requirements:
+                           {this.state.requirements.map((requirement, i) =>
+                               <Col md="auto" style={{textAlign: "left"}}>- {requirement}</Col>
+                          )}
+                        <Row style={{marginTop: '20px'}}></Row>
+                       Benefits:
+                       {this.state.benefits.map((benefit, i) =>
+                           <Col md="auto" style={{textAlign: "left"}}>- {benefit}</Col>
+                       )}
+                       <Row style={{marginTop: '20px'}}>
+                        <Col>Salary: {this.state.salary}<Image src={salary} style={{color: 'white'}} /></Col>
+                       </Row>
                    </Modal.Body>
+               </Modal>
+
+
+
+               <Modal show={this.state.showMustLogIn} onHide={this.handleCloseMustLogIn}>
+                   <Modal.Header closeButton>
+                       <Modal.Title>No access !</Modal.Title>
+                   </Modal.Header>
+                   <Modal.Body>Log in or create account to see this offer. It's fast and easy !</Modal.Body>
+                   <Modal.Footer>
+                       <Button variant="primary" onClick={this.handleCloseMustLogIn}>
+                           Ok
+                       </Button>
+                   </Modal.Footer>
                </Modal>
 
            </Container>

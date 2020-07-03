@@ -67,7 +67,6 @@ class MyOffers extends Component {
         axios.post("http://localhost:8080/jobs/userOffers", {
             username: this.state.username
         }).then(response => {
-            console.log(response);
             const newJobs = response.data.map(c=>{
                 return {
                     id: c.id,
