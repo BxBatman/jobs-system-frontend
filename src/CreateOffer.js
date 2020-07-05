@@ -15,10 +15,11 @@ class CreateOffer extends Component {
             benefits:[],
             title: '',
             description: '',
-            workType: '',
+            workType: 'Stationary',
             salary:'',
             workHours:'',
-            username: localStorage.getItem("Username")
+            username: localStorage.getItem("Username"),
+            validated: false
 
         }
         this.handleChangeRequirements = this.handleChangeRequirements.bind(this)
@@ -40,8 +41,22 @@ class CreateOffer extends Component {
     };
 
     onCreateOfferSubmit = (e) => {
-        e.preventDefault();
-        this.sendCreateOffer();
+
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        this.setState({
+            validated: true
+        })
+
+        if (form.checkValidity() === true) {
+            e.preventDefault();
+            this.sendCreateOffer();
+        }
+
     }
 
     sendCreateOffer() {
@@ -71,12 +86,17 @@ class CreateOffer extends Component {
                 </Row>
                 <Row>
                     <Col md={{ span: 6, offset: 3 }}>
-                        <Form className="create-offer-form" onSubmit={this.onCreateOfferSubmit}>
+                        <Form noValidate validated={this.state.validated} className="create-offer-form" onSubmit={this.onCreateOfferSubmit}>
                             <Form.Group>
                                 <Form.Label>Title</Form.Label>
-                                <Form.Control type="text" id="title"  onChange={this.handleChange} />
+                                <Form.Control required type="text" id="title"  onChange={this.handleChange} />
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter the title
+                                </Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group>
+                            <Form.Row>
+                            <Form.Group as={Col} md="6">
                                 <Form.Label>Work type</Form.Label>
                                 <Form.Control as="select" id="workType" onChange={this.handleChange}>
                                     <option>Stationary</option>
@@ -84,10 +104,15 @@ class CreateOffer extends Component {
                                     <option>Partially stationary</option>
                                 </Form.Control>
                             </Form.Group>
-                            <Form.Group>
+                            <Form.Group as={Col} md="6">
                                 <Form.Label>Work hours</Form.Label>
-                                <Form.Control type="workHours" id="workHours" placeholder="eg. 8:00-16:00" onChange={this.handleChange}/>
+                                <Form.Control required type="workHours" id="workHours" placeholder="eg. 8:00-16:00" onChange={this.handleChange}/>
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter the hours
+                                </Form.Control.Feedback>
                             </Form.Group>
+                                </Form.Row>
                             <Form.Group>
                                 <Form.Label>Requirements</Form.Label>
                                 <TagsInput value={this.state.requirements} inputProps={{placeholder: "Add value "}}  onChange={this.handleChangeRequirements} />
@@ -98,11 +123,19 @@ class CreateOffer extends Component {
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Description</Form.Label>
-                                <Form.Control as="textarea" rows="4" id="description" onChange={this.handleChange} />
+                                <Form.Control required as="textarea" rows="4" id="description" onChange={this.handleChange} />
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter description
+                                </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Salary per month [brutto]</Form.Label>
-                                <Form.Control type="salary" id="salary" placeholder="eg. 5 000" onChange={this.handleChange} />
+                                <Form.Control required type="salary" id="salary" placeholder="eg. 5 000" onChange={this.handleChange} />
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter salary
+                                </Form.Control.Feedback>
                             </Form.Group>
                             <Button variant="primary" type="submit">
                                 Create

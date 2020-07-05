@@ -26,7 +26,8 @@ class Navigation extends Component {
             confirmPassword: '',
             loginEmail: localStorage.getItem("Username"),
             loginPassword: '',
-            switchLogin: true
+            switchLogin: true,
+            validated: false
 
         };
     }
@@ -72,23 +73,41 @@ class Navigation extends Component {
     }
 
     onUserCreateSubmit = (e) => {
-        e.preventDefault();
-        this.sendCreateUser();
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        this.setState({
+            validated: true
+        })
+
+        if (form.checkValidity() === true) {
+            e.preventDefault();
+            this.sendCreateUser();
+        }
 
     }
 
     sendCreateUser() {
-        axios.post("http://localhost:8080/users/sign-up", {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            password: this.state.password,
-            phoneNumber: this.state.phoneNumber
-        }).then(response => {
-            this.handleCloseRegister();
-        }).catch(error => {
-            NotificationManager.error("Error while creating user");
-        })
+
+        if (this.state.password === this.state.confirmPassword) {
+
+            axios.post("http://localhost:8080/users/sign-up", {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                password: this.state.password,
+                phoneNumber: this.state.phoneNumber
+            }).then(response => {
+                this.handleCloseRegister();
+            }).catch(error => {
+                NotificationManager.error("Error while creating user");
+            })
+        } else {
+            NotificationManager.error("Passwords dont match");
+        }
 
     }
 
@@ -161,35 +180,59 @@ class Navigation extends Component {
                     <Modal.Header closeButton>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form onSubmit={this.onUserCreateSubmit}>
+                        <Form noValidate validated={this.state.validated} onSubmit={this.onUserCreateSubmit}>
                             <Form.Group >
                                 <Form.Label>First name</Form.Label>
-                                <Form.Control type="text" name="firstName" id="firstName" placeholder="Enter first name" onChange={this.handleChange} />
+                                <Form.Control required type="text" name="firstName" id="firstName" placeholder="Enter first name" onChange={this.handleChange} />
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter first name
+                                </Form.Control.Feedback>
                             </Form.Group>
 
                             <Form.Group>
                                 <Form.Label>Last name</Form.Label>
-                                <Form.Control name="lastName" id="lastName" placeholder="Enter last name" onChange={this.handleChange} />
+                                <Form.Control required name="lastName" id="lastName" placeholder="Enter last name" onChange={this.handleChange} />
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter last name
+                                </Form.Control.Feedback>
                             </Form.Group>
 
                             <Form.Group>
                                 <Form.Label>Phone number</Form.Label>
-                                <Form.Control name="phoneNumber" id="phoneNumber" placeholder="Enter phone number" onChange={this.handleChange} />
+                                <Form.Control required name="phoneNumber" id="phoneNumber" placeholder="Enter phone number" onChange={this.handleChange} />
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter first name
+                                </Form.Control.Feedback>
                             </Form.Group>
 
                             <Form.Group>
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" name="email" id="email" placeholder="Enter email" onChange={this.handleChange} />
+                                <Form.Control required type="email" name="email" id="email" placeholder="Enter email" onChange={this.handleChange} />
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter email
+                                </Form.Control.Feedback>
                             </Form.Group>
 
                             <Form.Group>
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" name="password" id="password" placeholder="Password" onChange={this.handleChange} />
+                                <Form.Control required type="password" name="password" id="password" placeholder="Password" onChange={this.handleChange} />
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter password
+                                </Form.Control.Feedback>
                             </Form.Group>
 
                             <Form.Group>
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password" onChange={this.handleChange} />
+                                <Form.Control required type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password" onChange={this.handleChange} />
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter password
+                                </Form.Control.Feedback>
                             </Form.Group>
                             <Col md={{ span: 2, offset: 2 }}>
                             <Button style={{width: '300px', marginTop: '40px'}} variant="primary" type="submit">

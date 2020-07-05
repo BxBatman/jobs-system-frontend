@@ -27,6 +27,8 @@ class Home extends Component {
             salary: '',
             firstName: '',
             lastName: '',
+            phoneNumber: '',
+            email: '',
             isLogged: localStorage.getItem("Username") !== ''
         }
         this.onShowDetails = this.onShowDetails.bind(this);
@@ -77,6 +79,8 @@ class Home extends Component {
                 salary: response.data.salary,
                 firstName: response.data.firstName,
                 lastName: response.data.lastName,
+                phoneNumber: response.data.phoneNumber,
+                email: response.data.email,
                 showDetails: true
             })
 
@@ -173,6 +177,14 @@ class Home extends Component {
                        {this.state.benefits.map((benefit, i) =>
                            <Col md="auto" style={{textAlign: "left"}}>- {benefit}</Col>
                        )}
+                       <Row style={{marginTop: '20px'}}>
+                           <Col>Email: {this.state.email}</Col>
+                       </Row>
+
+                       <Row style={{marginTop: '20px'}}>
+                           <Col>Phone number: {this.state.phoneNumber}</Col>
+                       </Row>
+
                        <Row style={{marginTop: '20px'}}>
                         <Col>Salary: {this.state.salary}<Image src={salary} style={{color: 'white'}} /></Col>
                        </Row>
