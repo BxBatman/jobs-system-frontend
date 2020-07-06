@@ -6,6 +6,7 @@ import home from "./Home";
 import createOffer from "./CreateOffer"
 import myOffers from "./MyOffers"
 import 'react-notifications/lib/notifications.css';
+import ManageJobs from "./ManageJobs";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route exact path="/createOffer" component={createOffer}/>
             <Route exact path="/" component={home} />
             <Route exact path="/myOffers" component={myOffers}/>
+            <Route exact path="/manageJobs" component={ManageJobs}/>
           </BrowserRouter>
         </header>
       </div>

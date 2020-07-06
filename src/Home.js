@@ -81,7 +81,7 @@ class Home extends Component {
                 lastName: response.data.lastName,
                 phoneNumber: response.data.phoneNumber,
                 email: response.data.email,
-                showDetails: true
+                showDetails: true,
             })
 
         }).catch(error => {

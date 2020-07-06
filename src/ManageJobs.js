@@ -6,10 +6,10 @@ import TagsInput from 'react-tagsinput'
 import axios from "axios";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
-import Image from "react-bootstrap/Image";
 import salary from "./components/salary.png";
+import Image from "react-bootstrap/Image";
 
-class MyOffers extends Component {
+class ManageJobs extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -21,9 +21,7 @@ class MyOffers extends Component {
             workType: '',
             salary:'',
             jobs: [],
-            workHours:'',
-            username: localStorage.getItem("Username")
-
+            workHours:''
         }
 
         this.onShowDetails = this.onShowDetails.bind(this);
@@ -66,9 +64,10 @@ class MyOffers extends Component {
     }
 
     componentDidMount() {
-        axios.post("http://localhost:8080/jobs/userOffers", {
-            username: this.state.username
-        }).then(response => {
+        if (this.state.role !== "ROLE_ADMIN") {
+            this.props.history.push("/");
+        }
+        axios.get("http://localhost:8080/jobs", {}).then(response => {
             const newJobs = response.data.map(c=>{
                 return {
                     id: c.id,
@@ -95,22 +94,22 @@ class MyOffers extends Component {
                 </Row>
                 <Row style={{marginTop: '40px'}}>
                     <Col md={{ span: 6, offset: 3 }}>
-                            <ListGroup>
-                                {this.state.jobs.map((job, i) =>
-                                    <ListGroupItem variant="dark" key={i}>
+                        <ListGroup>
+                            {this.state.jobs.map((job, i) =>
+                                <ListGroupItem variant="dark" key={i}>
 
-                                        <Row>
-                                            <Col style={{textAlign: "left"}}>Oferta #{job.id}: {job.title}</Col>
-                                            <Col md="auto"><Image src={salary} style={{color: 'white'}} fluid />  {job.salary}zł</Col>
-                                            <Col xs lg="3">
-                                                <Button className="pull-right" bsSize="small" onClick={() => this.onShowDetails(job)}
-                                                        bsStyle="primary">Details</Button>
-                                                <Button className="pull-right"bsSize="small" onClick={() => this.onDelete(job)}
-                                                        bsStyle="danger" style={{backgroundColor: 'red', marginLeft: '10px'}}>Delete</Button>
-                                            </Col>
-                                        </Row>
+                                    <Row>
+                                        <Col style={{textAlign: "left"}}>Oferta #{job.id}: {job.title}</Col>
+                                        <Col md="auto"><Image src={salary} style={{color: 'white'}} fluid /> {job.salary}zł</Col>
+                                        <Col xs lg="3">
+                                            <Button className="pull-right" bsSize="small" onClick={() => this.onShowDetails(job)}
+                                                    bsStyle="primary">Details</Button>
+                                            <Button className="pull-right"bsSize="small" onClick={() => this.onDelete(job)}
+                                                    bsStyle="danger" style={{backgroundColor: 'red', marginLeft: '10px'}}>Delete</Button>
+                                        </Col>
+                                    </Row>
                                 </ListGroupItem>)}
-                            </ListGroup>
+                        </ListGroup>
                     </Col>
                 </Row>
 
@@ -164,4 +163,4 @@ class MyOffers extends Component {
     }
 
 }
-export default MyOffers;
+export default ManageJobs;

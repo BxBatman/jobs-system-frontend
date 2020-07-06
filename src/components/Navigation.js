@@ -26,6 +26,7 @@ class Navigation extends Component {
             confirmPassword: '',
             loginEmail: localStorage.getItem("Username"),
             loginPassword: '',
+            role: localStorage.getItem("Role"),
             switchLogin: true,
             validated: false
 
@@ -139,8 +140,9 @@ class Navigation extends Component {
                 <Image src={logo} style={{color: 'white'}} fluid />
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Jobs</Nav.Link>
-                    {this.state.switchLogin ? null : <Nav.Link href="/myOffers">My Offers</Nav.Link>}
-                    {this.state.switchLogin ? null : <Nav.Link href="/createOffer">Create offer</Nav.Link>}
+                    {this.state.role!=="ROLE_USER" ? null : <Nav.Link href="/myOffers">My Offers</Nav.Link>}
+                    {this.state.role!=="ROLE_USER" ? null : <Nav.Link href="/createOffer">Create offer</Nav.Link>}
+                    {this.state.role!=="ROLE_ADMIN" ? null : <Nav.Link href="/manageJobs">Manage jobs</Nav.Link>}
                 </Nav>
                 {this.state.switchLogin ? <NavDropdown className="navigation-dropdown" id="nav-dropdown" title="Log in">
                      <NavDropdown.Item id="nav-dropdown-item" onClick={this.handleLogin}>Log in</NavDropdown.Item>

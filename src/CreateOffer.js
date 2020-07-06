@@ -19,6 +19,7 @@ class CreateOffer extends Component {
             salary:'',
             workHours:'',
             username: localStorage.getItem("Username"),
+            role: localStorage.getItem("Role"),
             validated: false
 
         }
@@ -39,6 +40,13 @@ class CreateOffer extends Component {
             [event.target.id]: event.target.value
         });
     };
+
+
+    componentDidMount() {
+        if (this.state.role !== "ROLE_USER") {
+            this.props.history.push("/");
+        }
+    }
 
     onCreateOfferSubmit = (e) => {
 
