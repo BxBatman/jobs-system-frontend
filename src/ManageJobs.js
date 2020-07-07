@@ -20,6 +20,7 @@ class ManageJobs extends Component {
             showDetails: false,
             workType: '',
             salary:'',
+            role: localStorage.getItem("Role"),
             jobs: [],
             workHours:''
         }
